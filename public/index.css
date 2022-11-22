@@ -1,0 +1,83 @@
+@import "./main-styles.css";
+
+body {
+  background-color: #eee;
+  font-family: var(--font-Source);
+
+}
+
+main {
+  margin-right: 2rem;
+  margin-left: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4rem;
+  row-gap: 2rem;
+}
+
+
+h1 {
+  font-family: var(--font-Source);
+  font-weight: var(--font-Source-size);
+  font-size: 40px;
+  border-bottom: 2px solid #413F42;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+
+h2 {
+  font-weight: bold;
+}
+
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  margin-bottom: 2rem;
+  font-size: 22px;
+  align-items: center;
+}
+
+.content ul {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  align-items: start;
+}
+
+.content ul li a {
+  font-weight: bold;
+  color: #00ABB3;
+}
+
+.example {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  font-size: 22px;
+}
+
+.example code {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #fff;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+
+footer {
+  font-size: 20px;
+}
+footer a {
+  color: #3C4048;
+  text-decoration: none;
+  font-weight: bold;
+}
