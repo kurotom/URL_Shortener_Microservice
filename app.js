@@ -17,7 +17,7 @@ let urlModel = require('./db_Model/url_model.js');
 const settingsConnection = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  dbName: "shorturl"
+  dbName: process.env.DBNAME
 }
 
 mongoose.connect(
@@ -49,11 +49,11 @@ app.get('/api/shorturl/:id', (req, res) => {
 
   urlModel.find({short_url: id})
     .then((match) => {
-      console.log('url match', match);
+      // console.log('url match', match);
       res.redirect(match[0].original_url);
     })
     .catch((error) => {
-      console.log('Redirect Error:', error);
+      // console.log('Redirect Error:', error);
       res.json({error: 'Server error'});
     });
 
@@ -66,22 +66,21 @@ app.post('/api/shorturl', (req, res) => {
   if (url.length > 0) {
     try {
       let urlObj = new URL (req.body.url);
+      // console.log("--->", urlObj.hostname);
 
-      console.log("--->", urlObj.hostname);
       dns.lookup(urlObj.hostname, (err, address, family) => {
-        console.log(err, address, family);
+        // console.log(err, address, family);
 
         if (err === null) {
           // console.log(urlObj.href, urlObj)
           urlModel.find({original_url: urlObj.href})
             .then((match) => {
-              console.log('MATCH', match);
+              // console.log('MATCH', match);
 
               if (match.length === 0) {
 
                 urlModel.count()
                   .then((amount) => {
-
                     let myUrl = new urlModel({
                       original_url: urlObj.href,
                       short_url: amount  + 1
@@ -97,7 +96,7 @@ app.post('/api/shorturl', (req, res) => {
                         });
                       })
                       .catch((error) => {
-                        console.log('Error Save DB ->', error);
+                        // console.log('Error Save DB ->', error);
                         res.json({error: 'Server error'});
                       });
                   })
@@ -114,161 +113,21 @@ app.post('/api/shorturl', (req, res) => {
               };
             })
             .catch((error) => {
-              console.log(error);
-              res.json({error: 'Server Error'})
+              // console.log(error);
+              res.json({error: 'Server Error'});
             });
-
-
         } else if (err !== null) {
           // res.json({error: "Invalid Hostname"})
           res.json({error: 'invalid url'});
-        }
-
+        };
       });
     } catch (error) {
-      console.log('URL error --->', error);
+      // console.log('URL error --->', error);
       res.json({error: 'invalid url'});
     }
   } else {
     res.json({error: 'invalid url'});
-  }
-
-
-
-  //
-  // if (url.length === 0) {
-  //   res.json({error: 'invalid url'});
-  // } else {
-  //
-  //   let reURL = /(http|https)\:\/\/\w+.?\w+\.\w{2,3}\/?$/gmi;
-  //   let matchUrl = url.match(reURL);
-  //   if (matchUrl !== null) {
-  //     console.log(matchUrl, matchUrl[0]);
-  //
-  //     // let totalDocuments;
-  //     // urlModel.count()
-  //     //   .then((amount) => {
-  //     //     totalDocuments = amount;
-  //     //   })
-  //     //   .catch((error) => {
-  //     //     // console.log(error);
-  //     //     res.json({error: 'Server error'});
-  //     //   });
-  //
-  //     // console.log(matchUrl)
-  //
-  //     urlModel.find({original_url: matchUrl[0]})
-  //       .then((match) => {
-  //
-  //         // Condicional coincidencia URL consultada
-  //         if (match.length === 0) {
-  //           // console.log(match, totalDocuments);
-  //
-  //           const reLookup = /\w+.?\w+\.\w{2,3}\/?$/gi;
-  //           let matchDomain = matchUrl[0].match(reLookup);
-  //
-  //           console.log(matchDomain)
-  //
-  //           let domainPure = "";
-  //           let reDomainPure = /\/$/;
-  //           let indexDomain = matchDomain[0].search(reDomainPure);
-  //           console.log(indexDomain)
-  //           if (domainPure < 0) {
-  //             domainPure = matchDomain[0].slice(0,indexDomain);
-  //           } else if (domainPure >= 0){
-  //             domainPure = matchDomain[0];
-  //           };
-  //
-  //           console.log(matchDomain, domainPure);
-  //
-  //           // Coincidencia REGEX dominio
-  //           if (matchDomain === null) {
-  //             res.json({error: 'Invalid Hostname'});
-  //           } else if (matchDomain !== null) {
-  //             // Busca el dominio si existe
-  //             dns.lookup(domainPure, (err, address, family) => {
-  //               // Existe y se guarda
-  //               if (err === null) {
-  //
-  //
-  //                 let totalDocuments;
-  //                 urlModel.count()
-  //                   .then((amount) => {
-  //                     // totalDocuments = amount;
-  //
-  //                     let myUrl = new urlModel({
-  //                       original_url: matchUrl[0],
-  //                       short_url: amount  + 1
-  //                       // short_url: totalDocuments  + 1
-  //
-  //                     });
-  //
-  //                     myUrl.save()
-  //                       .then((saved) => {
-  //                         console.log("saved");
-  //                         // console.log(saved)
-  //                         res.json({
-  //                           original_url: saved.original_url,
-  //                           short_url: saved.short_url
-  //                         });
-  //                       })
-  //                       .catch((error) => {
-  //                         console.log('Error Save DB ->', error);
-  //                         res.json({error: 'Server error'});
-  //                       });
-  //                   })
-  //                   .catch((error) => {
-  //                     // console.log(error);
-  //                     res.json({error: 'Server error'});
-  //                   });
-  //
-  //
-  //
-  //                 // let myUrl = new urlModel({
-  //                 //   original_url: matchUrl[0],
-  //                 //   short_url: totalDocuments  + 1
-  //                 // });
-  //                 //
-  //                 // myUrl.save()
-  //                 //   .then((saved) => {
-  //                 //     console.log("saved");
-  //                 //     // console.log(saved)
-  //                 //     res.json({
-  //                 //       original_url: saved.original_url,
-  //                 //       short_url: saved.short_url
-  //                 //     });
-  //                 //   })
-  //                 //   .catch((error) => {
-  //                 //     console.log('Error Save DB ->', error);
-  //                 //     res.json({error: 'Server error'});
-  //                 //   });
-  //               } else if (err === null) {
-  //                 res.json({error: "Invalid Hostname"});
-  //               };
-  //             });
-  //           };
-  //
-  //
-  //
-  //         } else {
-  //           res.json({
-  //             original_url: match[0].original_url,
-  //             short_url: match[0].short_url
-  //           });
-  //         }
-  //
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         res.json({error: 'Server error'});
-  //       })
-  //
-  //
-  //
-  //   } else {
-  //     res.json({error: 'invalid url'});
-  //   }
-  // };
+  };
 });
 
 

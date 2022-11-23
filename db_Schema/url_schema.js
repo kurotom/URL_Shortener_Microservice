@@ -6,7 +6,7 @@ const schemaURL = mongoose.Schema({
   short_url: Number
 },
 {
-  collection: "data"
+  collection: process.env.COLLECTION
 }
 );
 
