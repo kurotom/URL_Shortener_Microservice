@@ -1,7 +1,7 @@
 {
   "name": "timestamp_microservice",
   "version": "1.0.0",
-  "description": "Microservicio timestamp - proyecto desafío Freecodecamp",
+  "description": "URL shortener - proyecto desafío Freecodecamp",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
