@@ -72,51 +72,51 @@ app.post('/api/shorturl', (req, res) => {
         console.log(err, address, family);
 
         if (err === null) {
-          console.log(urlObj.origin, urlObj.body)
-          urlModel.find({original_url: urlObj.origin})
-          .then((match) => {
-            console.log(match);
+          // console.log(urlObj.href, urlObj)
+          urlModel.find({original_url: urlObj.href})
+            .then((match) => {
+              console.log('MATCH', match);
 
-            if (match.length === 0) {
+              if (match.length === 0) {
 
-              urlModel.count()
-                .then((amount) => {
+                urlModel.count()
+                  .then((amount) => {
 
-                  let myUrl = new urlModel({
-                    original_url: urlObj.origin,
-                    short_url: amount  + 1
+                    let myUrl = new urlModel({
+                      original_url: urlObj.href,
+                      short_url: amount  + 1
+                    });
+
+                    myUrl.save()
+                      .then((saved) => {
+                        console.log("saved");
+                        // console.log(saved)
+                        res.json({
+                          original_url: saved.original_url,
+                          short_url: saved.short_url
+                        });
+                      })
+                      .catch((error) => {
+                        console.log('Error Save DB ->', error);
+                        res.json({error: 'Server error'});
+                      });
+                  })
+                  .catch((error) => {
+                    // console.log(error);
+                    res.json({error: 'Server error'});
                   });
 
-                  myUrl.save()
-                    .then((saved) => {
-                      console.log("saved");
-                      // console.log(saved)
-                      res.json({
-                        original_url: saved.original_url,
-                        short_url: saved.short_url
-                      });
-                    })
-                    .catch((error) => {
-                      console.log('Error Save DB ->', error);
-                      res.json({error: 'Server error'});
-                    });
-                })
-                .catch((error) => {
-                  // console.log(error);
-                  res.json({error: 'Server error'});
+              } else if (match.length > 0) {
+                res.json({
+                  original_url: match[0].original_url,
+                  short_url: match[0].short_url
                 });
-
-            } else if (match.length > 0) {
-              res.json({
-                original_url: match[0].original_url,
-                short_url: match[0].short_url
-              });
-            };
-          })
-          .catch((error) => {
-            console.log(error);
-            res.json({error: 'Server Error'})
-          });
+              };
+            })
+            .catch((error) => {
+              console.log(error);
+              res.json({error: 'Server Error'})
+            });
 
 
         } else if (err !== null) {
