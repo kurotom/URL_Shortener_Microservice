@@ -8,7 +8,7 @@ let server = express();
 let port = process.env.PORT || 3000;
 
 
-server.use(cors({optionsSuccessStatus: 200}));
+server.use(cors());
 
 server.use('/', app)
 
