@@ -119,7 +119,8 @@ app.post('/api/shorturl', (req, res) => {
 
 
         } else if (err !== null) {
-          res.json({error: "Invalid Hostname"})
+          // res.json({error: "Invalid Hostname"})
+          res.json({error: 'invalid url'});
         }
 
       });
