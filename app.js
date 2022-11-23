@@ -88,7 +88,7 @@ app.post('/api/shorturl', (req, res) => {
 
           // Condicional coincidencia URL consultada
           if (match.length === 0) {
-            console.log(match, totalDocuments);
+            // console.log(match, totalDocuments);
 
             const reLookup = /\w+.?\w+\.\w{2,3}\/?$/gi;
             let matchDomain = matchUrl[0].match(reLookup);
