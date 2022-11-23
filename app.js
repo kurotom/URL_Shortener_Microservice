@@ -71,7 +71,7 @@ app.post('/api/shorturl', (req, res) => {
         console.log(err, address, family);
 
         if (err === null) {
-          console.log(urlObj.origin)
+          console.log(urlObj.origin, urlObj.body)
           urlModel.find({original_url: urlObj.origin})
           .then((match) => {
             console.log(match);
@@ -107,8 +107,8 @@ app.post('/api/shorturl', (req, res) => {
 
             } else if (match.length > 0) {
               res.json({
-                original_url: match.original_url,
-                short_url: match.short_url
+                original_url: match[0].original_url,
+                short_url: match[0].short_url
               });
             };
           })
