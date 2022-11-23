@@ -71,15 +71,15 @@ app.post('/api/shorturl', (req, res) => {
     if (matchUrl !== null) {
       console.log(matchUrl, matchUrl[0]);
 
-      let totalDocuments;
-      urlModel.count()
-        .then((amount) => {
-          totalDocuments = amount;
-        })
-        .catch((error) => {
-          // console.log(error);
-          res.json({error: 'Server error'});
-        });
+      // let totalDocuments;
+      // urlModel.count()
+      //   .then((amount) => {
+      //     totalDocuments = amount;
+      //   })
+      //   .catch((error) => {
+      //     // console.log(error);
+      //     res.json({error: 'Server error'});
+      //   });
 
       // console.log(matchUrl)
 
@@ -115,23 +115,59 @@ app.post('/api/shorturl', (req, res) => {
               dns.lookup(domainPure, (err, address, family) => {
                 // Existe y se guarda
                 if (err === null) {
-                  let myUrl = new urlModel({
-                    original_url: matchUrl[0],
-                    short_url: totalDocuments  + 1
-                  });
-                  myUrl.save()
-                    .then((saved) => {
-                      console.log("saved");
-                      // console.log(saved)
-                      res.json({
-                        original_url: saved.original_url,
-                        short_url: saved.short_url
+
+
+                  let totalDocuments;
+                  urlModel.count()
+                    .then((amount) => {
+                      // totalDocuments = amount;
+
+                      let myUrl = new urlModel({
+                        original_url: matchUrl[0],
+                        short_url: amount  + 1
+                        // short_url: totalDocuments  + 1
+
                       });
+
+                      myUrl.save()
+                        .then((saved) => {
+                          console.log("saved");
+                          // console.log(saved)
+                          res.json({
+                            original_url: saved.original_url,
+                            short_url: saved.short_url
+                          });
+                        })
+                        .catch((error) => {
+                          console.log('Error Save DB ->', error);
+                          res.json({error: 'Server error'});
+                        });
                     })
                     .catch((error) => {
-                      console.log('Error Save DB ->', error);
+                      // console.log(error);
                       res.json({error: 'Server error'});
                     });
+
+
+
+                  // let myUrl = new urlModel({
+                  //   original_url: matchUrl[0],
+                  //   short_url: totalDocuments  + 1
+                  // });
+                  //
+                  // myUrl.save()
+                  //   .then((saved) => {
+                  //     console.log("saved");
+                  //     // console.log(saved)
+                  //     res.json({
+                  //       original_url: saved.original_url,
+                  //       short_url: saved.short_url
+                  //     });
+                  //   })
+                  //   .catch((error) => {
+                  //     console.log('Error Save DB ->', error);
+                  //     res.json({error: 'Server error'});
+                  //   });
                 } else if (err === null) {
                   res.json({error: "Invalid Hostname"});
                 };
