@@ -125,17 +125,17 @@ app.post('/api/shorturl', (req, res) => {
       });
     } catch (error) {
       console.log('URL error --->', error);
-      res.json({error: 'Invalid URL'});
+      res.json({error: 'invalid url'});
     }
   } else {
-    res.json({error: 'Invalid URL'});
+    res.json({error: 'invalid url'});
   }
 
 
 
   //
   // if (url.length === 0) {
-  //   res.json({error: 'Invalid URL'});
+  //   res.json({error: 'invalid url'});
   // } else {
   //
   //   let reURL = /(http|https)\:\/\/\w+.?\w+\.\w{2,3}\/?$/gmi;
@@ -264,7 +264,7 @@ app.post('/api/shorturl', (req, res) => {
   //
   //
   //   } else {
-  //     res.json({error: 'Invalid URL'});
+  //     res.json({error: 'invalid url'});
   //   }
   // };
 });
