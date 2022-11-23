@@ -22,21 +22,47 @@
       <h1>
         URL Shortener Microservice
       </h1>
+      <div class="example">
+        <span>
+          Example:
+        </span>
+        <p class="">
+          <code>
+            POST [project_url]/api/shorturl
+          </code>
+          -
+          <code>
+            https://www.google.com
+          </code>
+        </p>
+      </div>
+
+      <div class="formDiv">
+
+        <form class="" action="/api/shorturl" method="POST">
+          <fieldset>
+            <legend>URL Shortener</legend>
+
+            <span>URL:</span>
+            <input type="text" name="url" placeholder="https://www.freecodecamp.org/">
+            <input type="submit" name="" value="Post URL">
+          </fieldset>
+        </form>
+
+      </div>
+
       <div class="content">
         <h2>Usage:</h2>
         <ul>
           <li>
-            <a href="/api/whoami">/api/whoami</a>
+            <a href="/api/shorturl/1">/api/shorturl/1</a>
           </li>
         </ul>
       </div>
 
       <div class="example">
-        <h2>Example Output:</h2>
-        <code>
-          {"ipaddress":"159.20.14.100","language":"en-US,en;q=0.5",
-"software":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0"}
-        </code>
+        <h2>Will Redirect to:</h2>
+        <span>https://forum.freecodecamp.org/</span>
       </div>
 
       <footer>

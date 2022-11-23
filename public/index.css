@@ -13,8 +13,9 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 4rem;
-  row-gap: 2rem;
+  padding-top: 1rem;
+  row-gap: 1.2rem;
+  margin-bottom: 5rem;
 }
 
 
@@ -34,14 +35,17 @@ h2 {
   font-weight: bold;
 }
 
+p {
+  line-height: 1.7rem;
+}
 
 .content {
   width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
-  margin-bottom: 2rem;
-  font-size: 22px;
+  margin-bottom: 1rem;
+  font-size: 21px;
   align-items: center;
 }
 
@@ -61,20 +65,62 @@ h2 {
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;
-  font-size: 22px;
+  font-size: 21px;
 }
 
-.example code {
+code {
+  background-color: #fff;
+}
+
+.formDiv {
+  width: 100%;
+}
+
+form {
+  padding: 2rem 1rem 1rem 1rem;
+  border: 1px solid;
+  border-radius: 1rem;
+  font-size: 21px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+fieldset {
+  position: relative;
+  border: 1px solid;
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+legend {
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  background-color: #eee;
   padding-left: 1rem;
   padding-right: 1rem;
-  background-color: #fff;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 
+fieldset span {
+  margin-right: 2rem;
+}
+
+input {
+  font-size: var(--font-Source);
+}
 
 footer {
   font-size: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: lightgray;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
 }
 footer a {
   color: #3C4048;
