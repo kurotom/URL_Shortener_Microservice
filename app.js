@@ -60,6 +60,7 @@ app.get('/api/shorturl/:id', (req, res) => {
 
 
 app.post('/api/shorturl', (req, res) => {
+  console.log(req.params)
   let url = req.body.url;
 
   console.log("--->", url);
