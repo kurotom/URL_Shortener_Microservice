@@ -69,7 +69,7 @@ app.post('/api/shorturl', (req, res) => {
     let reURL = /(http|https)\:\/\/\w+.?\w+\.\w{2,3}\/?$/gmi;
     let matchUrl = url.match(reURL);
     if (matchUrl !== null) {
-      // console.log(matchUrl, matchUrl[0]);
+      console.log(matchUrl, matchUrl[0]);
 
       let totalDocuments;
       urlModel.count()
@@ -88,21 +88,24 @@ app.post('/api/shorturl', (req, res) => {
 
           // Condicional coincidencia URL consultada
           if (match.length === 0) {
-            // console.log(match, totalDocuments);
+            console.log(match, totalDocuments);
 
             const reLookup = /\w+.?\w+\.\w{2,3}\/?$/gi;
             let matchDomain = matchUrl[0].match(reLookup);
 
+            console.log(matchDomain)
+
             let domainPure = "";
             let reDomainPure = /\/$/;
             let indexDomain = matchDomain[0].search(reDomainPure);
-            if (domainPure > -1) {
+            console.log(indexDomain)
+            if (domainPure < 0) {
               domainPure = matchDomain[0].slice(0,indexDomain);
-            } else {
+            } else if (domainPure >= 0){
               domainPure = matchDomain[0];
             };
 
-            // console.log(matchDomain, domainPure);
+            console.log(matchDomain, domainPure);
 
             // Coincidencia REGEX dominio
             if (matchDomain === null) {
