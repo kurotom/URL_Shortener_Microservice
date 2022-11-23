@@ -49,7 +49,8 @@ app.get('/api/shorturl/:id', (req, res) => {
 
   urlModel.find({short_url: id})
     .then((match) => {
-      res.redirect(match[0].original_url)
+      console.log('url match', match);
+      res.redirect(match[0].original_url);
     })
     .catch((error) => {
       console.log('Redirect Error:', error);
